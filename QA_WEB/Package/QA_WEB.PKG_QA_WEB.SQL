@@ -1,209 +1,9 @@
---DATE: 13-NOV-2017s
-CREATE OR REPLACE PACKAGE QA_WEB.PKG_QA_WEB
-AS
-    TYPE T_CURSOR IS REF CURSOR;
-    PROCEDURE LOGIN(PUSUARIO IN VARCHAR2, PPASS IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE CAMBIO_CLAVE(PUSUARIO IN VARCHAR2, PACTUAL IN VARCHAR2, PNUEVA IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE CARGA_DATA(IO_CURSOR IN OUT T_CURSOR, 
-                         IO_CURSOR2 IN OUT T_CURSOR, 
-                         IO_CURSOR3 IN OUT T_CURSOR, 
-                         IO_CURSOR4 IN OUT T_CURSOR,
-                         IO_CURSOR5 IN OUT T_CURSOR,
-                         IO_CURSOR6 IN OUT T_CURSOR,
-                         IO_CURSOR7 IN OUT T_CURSOR,
-                         PERROR OUT VARCHAR2);
-    PROCEDURE CARGA_TICKET(PFECHA_INICIO VARCHAR,PFECHA_FIN VARCHAR, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE CARGA_SGP(PTICKET IN VARCHAR2, PSUB_TICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, IO_CURSOR2 IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE INGRESAR_PLANIFICACION(PTICKET IN VARCHAR2,       
-                                     PFECHA_PLANIFICACION IN VARCHAR2,
-                                     PFECHA_QA IN VARCHAR2,                                                               
-                                     PFECHA_PROD IN VARCHAR2,
-                                     PHORAS_DESA IN VARCHAR2,
-                                     PIDTIPODESA IN VARCHAR2,
-                                     PTIPO_DESARROLLO IN VARCHAR2,
-                                     PIDVISADOR IN VARCHAR2,                                                                  
-                                     PVISADOR IN VARCHAR2,
-                                     PCLIENTE IN VARCHAR2,
-                                     PFECHA_SGA IN VARCHAR2,
-                                     PIDPRIORIDAD IN VARCHAR2,
-                                     PPRIORIDAD IN VARCHAR2,
-                                     PPASAPORQA IN VARCHAR2,
-                                     PDETALLE_SGP IN VARCHAR2,  
-                                     POBSERVACIONES_HIST IN VARCHAR2, 
-                                     POBSERVACIONES IN VARCHAR2,                            
-                                     PUSUARIO IN VARCHAR2, 
-                                     PID_ITSM IN VARCHAR2,
-                                     PITSM IN VARCHAR2,
-                                     PCOLOR IN VARCHAR2,
-                                     PNORMAQA IN VARCHAR2,
-                                     IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE VER_PLANIFICACION(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);                                     
-    PROCEDURE MODIFICAR_PLANIFICACION(PTICKET IN VARCHAR2,
-                                   PFECHA_PLANIFICACION IN VARCHAR2,                                   
-                                   PFECHA_QA IN VARCHAR2,
-                                   PFECHA_REAL IN VARCHAR2,
-                                   PFECHA_PROD IN VARCHAR2,
-                                   PFECHA_PROD_REAL IN VARCHAR2,
-                                   PHORAS_DESA IN VARCHAR2,
-                                   PID_TIPO_DESARROLLO IN VARCHAR2,
-                                   PTIPO_DESARROLLO IN VARCHAR2,
-                                   PID_VISADOR IN VARCHAR2,
-                                   PVISADOR IN VARCHAR2,
-                                   PCLIENTE IN VARCHAR2,
-                                   PID_ITSM IN VARCHAR2,
-                                   PITSM IN VARCHAR2,
-                                   PID_PRIORIDAD IN VARCHAR2,
-                                   PPRIORIDAD IN VARCHAR2,
-                                   PPASAPORQA IN VARCHAR2,
-                                   POBSERVACIONES_HIST IN VARCHAR2,
-                                   POBSERVACIONES IN VARCHAR2,
-                                   PUSUARIO_MOD IN VARCHAR2,
-                                   PNORMAQA IN VARCHAR2,
-                                   IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);            
-PROCEDURE CARGA_INICIO( IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-PROCEDURE VER_HISTORIAL(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-PROCEDURE VER_VISACION(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-PROCEDURE CARGAR_VISACION(PTICKET IN VARCHAR2,PAPLICACION IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-PROCEDURE INGRESAR_VISACION(PTICKET IN VARCHAR2,       
-                                     PFECHA_RECEPCION IN VARCHAR2,
-                                     PFECHA_INICIO IN VARCHAR2,                                                               
-                                     PFECHA_TERMINO IN VARCHAR2,
-                                     PHORAS_DESA IN VARCHAR2,
-                                     PTIEMPO_TOTAL IN VARCHAR2,
-                                     PDESCRIPCION IN VARCHAR2,
-                                     PCLIENTE IN VARCHAR2,   
-                                     PTIPO_DESA IN VARCHAR2, 
-                                     PTIPO_QA IN VARCHAR2, 
-                                     PRESULTADO_VISACION IN VARCHAR2,
-                                     PNUMERO_VISACION IN VARCHAR2,  
-                                     PITSM IN VARCHAR2,   
-                                     PPROGRAMADOR IN VARCHAR2,                                            
-                                     PVISADOR IN VARCHAR2,
-                                     PESTADO_VISACION IN VARCHAR2,
-                                     PTIPO_APLICACION IN VARCHAR2,
-                                     POBJETOS_PRODUCCION IN VARCHAR2,
-                                     PFALLA_VISACION IN VARCHAR2,
-                                     PTIPO_ERROR IN VARCHAR2,
-                                     PID_ITSM IN VARCHAR2,           
-                                     PID_PROGRAMADOR IN VARCHAR2,      
-                                     PID_VISADOR IN VARCHAR2,         
-                                     PID_TIPO_APLICACION IN VARCHAR2,
-                                     IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE HORAS_VISACION(PFECHA_INICIO VARCHAR,PFECHA_FIN VARCHAR, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE NUMEROVISACION(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);     
-    PROCEDURE VER_NUMERO_VISACION(PTICKET IN VARCHAR2, PNUMERO VARCHAR2,PAPLICACION VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);  
-    PROCEDURE AGREGAR_FEEDBACK(PTICKET IN VARCHAR2,PFEEDBACK IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);    
-    PROCEDURE AGREGAR_CUMPLIMIENTO(PTICKET IN VARCHAR2,PCUMPLIMIENTOQA IN VARCHAR2,PCUMPLIMIENTOCLIENTE IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);             
-    PROCEDURE VER_FEEDBACK(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE CARGAUSUARIOS(IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE CARGA_PERFIL(IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE VER_USUARIOS(PUSUARIO VARCHAR2,IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE INGRESAR_USUARIO(PUSUARIO IN VARCHAR2,       
-                                 PNOMBRE IN VARCHAR2,
-                                 PAPELLIDOPA IN VARCHAR2,                                                               
-                                 PAPELLIDOMA IN VARCHAR2,
-                                 PCARGO IN VARCHAR2,
-                                 PCORREO IN VARCHAR2,
-                                 PPERFIL IN VARCHAR2,
-                                 PIDPERFIL IN VARCHAR2,                                                                  
-                                 PPASS IN VARCHAR2,
-                                 PESTADO IN VARCHAR2,
-                                 IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-   PROCEDURE MODIFICAR_USUARIO(PUSUARIO IN VARCHAR2,       
-                                 PNOMBRE IN VARCHAR2,
-                                 PAPELLIDOPA IN VARCHAR2,                                                               
-                                 PAPELLIDOMA IN VARCHAR2,
-                                 PCARGO IN VARCHAR2,
-                                 PCORREO IN VARCHAR2,
-                                 PPERFIL IN VARCHAR2,
-                                 PIDPERFIL IN VARCHAR2,                                                                  
-                                 PPASS IN VARCHAR2,
-                                 PESTADO IN VARCHAR2,
-                                 IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-     PROCEDURE MODIFICAR_USUARIO_ESTANDAR(PUSUARIO IN VARCHAR2,       
-                                         PNOMBRE IN VARCHAR2,
-                                         PAPELLIDOPA IN VARCHAR2,                                                               
-                                         PAPELLIDOMA IN VARCHAR2,
-                                         PCORREO IN VARCHAR2,                                           
-                                         PPASS IN VARCHAR2,
-                                         IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);  
-    PROCEDURE CARGA_TICKET_SLA(PFECHA_INICIO VARCHAR,PFECHA_FIN VARCHAR, IO_CURSOR IN OUT T_CURSOR, IO_CURSOR2 IN OUT T_CURSOR,IO_CURSOR3 IN OUT T_CURSOR, PERROR OUT VARCHAR2);  
-    PROCEDURE CARGA_LISTA_TICKET(PFECHA_INICIO VARCHAR,PFECHA_FIN VARCHAR, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);                                                                                   
-    PROCEDURE CARGA_LISTA_PLANIFICACION(PFECHA_INICIO VARCHAR,PFECHA_FIN VARCHAR,PTICKET VARCHAR, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE CAMBIAR_ESTADO(PTICKET VARCHAR,IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE BUSCAR_APLICACION(PTICKET in VARCHAR,IO_CURSOR IN OUT T_CURSOR,IO_CURSOR2 IN OUT T_CURSOR,PERROR OUT VARCHAR2);
-    PROCEDURE BUSCAR_RECOMENDACION (PTICKET IN VARCHAR2,PAPLICACION   VARCHAR2,PNUMERO VARCHAR2,IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE BUSCAR_NUMERO(PTICKET IN VARCHAR2,PAPLICACION IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE INGRESAR_RECOMENDACION(PTICKET IN VARCHAR2,       
-                                 PAPLICACION IN VARCHAR2,
-                                 PNUMERO_APLICACION IN VARCHAR2,                                                               
-                                 PNUMERO IN VARCHAR2,
-                                 PTIPO_ERROR IN VARCHAR2,
-                                 PRESPONSABLE IN VARCHAR2,
-                                 PDESCRIPCION IN VARCHAR2,
-                                 PRESULTADO IN VARCHAR2,   
-                                 PUSUARIO IN VARCHAR2, 
-                                 IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE MODIFICAR_RESULTADO(PTICKET IN VARCHAR2,
-                                  PNUMERO IN VARCHAR2,
-                                  PAPLICACION IN VARCHAR2,
-                                  PNUMERO_APLICACION IN VARCHAR2,
-                                  PRESULTADO IN VARCHAR2, 
-                                  IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);                                
-    PROCEDURE ELIMINAR_RECOMENDACIONES(PTICKET IN VARCHAR2,
-                                        PAPLICACION IN VARCHAR2,
-                                        PNUMERO IN VARCHAR2,
-                                        IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE MODIFICAR_ESTADO_RECO(PTICKET IN VARCHAR2,
-                                    PAPLICACION IN VARCHAR2,
-                                    PNUMERO_APLICACION IN VARCHAR2,
-                                    PESTADO IN VARCHAR2,
-                                    IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE VER_CORREO(PUSUARIO IN VARCHAR2, PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE CARGA_CMB(IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE FECHA_PROD(PFECHAA IN VARCHAR2,PFECHAM IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE CONTADORMES(PFECHA IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE BARRA_PANEL(PFECHA1 IN VARCHAR2,PFECHA2 IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);       
-    PROCEDURE GRAFICOS_DONUT(PFECHA IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR,IO_CURSOR2 IN OUT T_CURSOR,IO_CURSOR3 IN OUT T_CURSOR, IO_CURSOR4 IN OUT T_CURSOR, IO_CURSOR5 IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE CARGA_GRAFICOS(PFECHA IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR,IO_CURSOR2 IN OUT T_CURSOR,IO_CURSOR3 IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE BUSCAR_T_F(PTICKET IN VARCHAR2,PFECHAINI IN VARCHAR2,PFECHAFIN IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR,IO_CURSOR2 IN OUT T_CURSOR,IO_CURSOR3 IN OUT T_CURSOR, PERROR OUT VARCHAR2);                                              
-    PROCEDURE AGREGAR_DETALLE(PSEMANA IN VARCHAR2,
-                             PESTADO IN VARCHAR2,
-                             PTICKET IN VARCHAR2,
-                             PFECHAQA IN VARCHAR2,
-                             PFECHAPROD IN VARCHAR2,
-                             PFECHAREAL IN VARCHAR2,
-                             PDESCRIPCION IN VARCHAR2,
-                             PRESPONSABILIDAD IN VARCHAR2,
-                             PPRIORIADAD IN VARCHAR2,
-                             IO_CURSOR IN OUT T_CURSOR,
-                             PERROR OUT VARCHAR2);
-     PROCEDURE TICKET_DETALLE(PTICKET IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR,PERROR OUT VARCHAR2);
-     PROCEDURE HISTORIAL_DETALLE(IO_CURSOR IN OUT T_CURSOR,PERROR OUT VARCHAR2);
-     PROCEDURE ELIMINAR_DETALLE(PTICKET IN VARCHAR2,IO_CURSOR IN OUT T_CURSOR,PERROR OUT VARCHAR2);
-     PROCEDURE MODIFICAR_DETALLE(PESTADO IN VARCHAR2,
-                             PTICKET IN VARCHAR2,
-                             PFECHAQA IN VARCHAR2,
-                             PFECHAPROD IN VARCHAR2,
-                             PFECHAREAL IN VARCHAR2,
-                             PDESCRIPCION IN VARCHAR2,
-                             PRESPONSABILIDAD IN VARCHAR2,
-                             PPRIORIADAD IN VARCHAR2,
-                             IO_CURSOR IN OUT T_CURSOR,
-                             PERROR OUT VARCHAR2);
-    PROCEDURE GRAFICO_PLANILLA(PFECHA_INICIO VARCHAR,PFECHA_FIN VARCHAR, IO_CURSOR IN OUT T_CURSOR,PERROR OUT VARCHAR2);
-    PROCEDURE BUSCAR_PASOSQA(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR,PERROR OUT VARCHAR2);
-    PROCEDURE ELIMINAR_TICKET(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE INICIAR_PAUSA(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    PROCEDURE DETENER_PAUSA(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2);
-    END;
-
 CREATE OR REPLACE PACKAGE BODY QA_WEB.PKG_QA_WEB 
 AS
     
     PROCEDURE LOGIN(PUSUARIO IN VARCHAR2, PPASS IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OUT VARCHAR2) 
-    IS    
-
+    IS
+    
     BEGIN
         PERROR:='OK';
         
@@ -217,9 +17,9 @@ AS
         FROM
             TB_QA_WEB_USUARIO
         WHERE 
-            USUARIO = SUBSTR(PUSUARIO, 1, 15)
+            USUARIO = PUSUARIO
         AND
-            PASS = SUBSTR(PPASS, 1, 15);
+            PASS = PPASS;
                    
     EXCEPTION 
         WHEN OTHERS THEN
@@ -241,9 +41,9 @@ AS
         FROM
             TB_QA_WEB_USUARIO
         WHERE
-            USUARIO = SUBSTR(PUSUARIO, 1, 15)
+            USUARIO = PUSUARIO
         AND
-            PASS = SUBSTR(PACTUAL, 1, 15);
+            PASS = PACTUAL;
         
         IF V_AUX > 0 THEN
         
@@ -256,9 +56,9 @@ AS
             UPDATE 
                 TB_QA_WEB_USUARIO
             SET
-                PASS = SUBSTR(PNUEVA, 1, 15)
+                PASS = PNUEVA
             WHERE
-                USUARIO = SUBSTR(PUSUARIO, 1, 15);
+                USUARIO = PUSUARIO;
         
         ELSE
         
@@ -665,7 +465,7 @@ AS
                 SUBSTR(PIDTIPODESA, 1, 2),
                 SUBSTR(PTIPO_DESARROLLO, 1, 30),
                 SUBSTR(PIDVISADOR, 1, 15),
-                SUBSTR(PVISADOR, 1, 15),
+                SUBSTR(PVISADOR, 1, 30),
                 SUBSTR(PCLIENTE, 1, 100),
                 SUBSTR(PFECHA_SGA, 1, 16),
                 SUBSTR(PIDPRIORIDAD, 1,2 ), 
@@ -1100,10 +900,10 @@ AS
                 TB_QA_WEB_VISACION
             WHERE
                 TICKET = SUBSTR(PTICKET,  1, 8)
-            AND
-                NUMERO_VISACION = TO_CHAR(P_MAX)
             AND 
-                TIPO_APLICACION = PAPLICACION;
+                TIPO_APLICACION = PAPLICACION
+            AND
+                NUMERO_VISACION = TO_CHAR(P_MAX);
                 
         ELSE
         
@@ -1248,7 +1048,7 @@ AS
             SUBSTR(PHORAS_DESA, 1, 4),
             SUBSTR(PTIEMPO_TOTAL, 1 , 5),
             SUBSTR(PDESCRIPCION, 1, 400),
-            SUBSTR(PCLIENTE, 1 , 30),
+            SUBSTR(PCLIENTE, 1 , 100),
             SUBSTR(PTIPO_DESA, 1, 30),
             SUBSTR(PTIPO_QA, 1, 20),
             SUBSTR(PRESULTADO_VISACION, 1 , 20),
@@ -1260,7 +1060,7 @@ AS
             SUBSTR(PTIPO_APLICACION, 1, 20),
             SUBSTR(POBJETOS_PRODUCCION,  1 , 5),
             SUBSTR(PFALLA_VISACION, 1 , 2 ),
-            SUBSTR(PTIPO_ERROR, 1 , 30 ),
+            SUBSTR(PTIPO_ERROR, 1 , 50 ),
             SUBSTR(PID_ITSM, 1, 15),
             SUBSTR(PID_PROGRAMADOR,  1 , 15),
             SUBSTR(PID_VISADOR, 1 , 15 ),
@@ -1362,9 +1162,9 @@ AS
             WHERE
                 TICKET = SUBSTR(PTICKET,  1, 8)
             AND
-                NUMERO_VISACION = SUBSTR(PNUMERO, 1, 2)
+                TIPO_APLICACION = SUBSTR(PAPLICACION, 1, 20)
             AND
-                TIPO_APLICACION = SUBSTR(PAPLICACION, 1, 20);
+                NUMERO_VISACION = SUBSTR(PNUMERO, 1, 2);
                 
     EXCEPTION
         WHEN OTHERS THEN
@@ -1581,7 +1381,7 @@ PROCEDURE VER_FEEDBACK(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OU
                 UPPER(SUBSTR(PCARGO, 1 , 30)),
                 SUBSTR(PCORREO, 1, 50),
                 SUBSTR(PPERFIL, 1 , 30),
-                TO_NUMBER(SUBSTR(PIDPERFIL, 1, 2)),                
+                TO_NUMBER(SUBSTR(PIDPERFIL, 1, 22)),                
                 SUBSTR(PESTADO, 1 , 8)
             );
             END IF;
@@ -2988,3 +2788,4 @@ PROCEDURE VER_FEEDBACK(PTICKET IN VARCHAR2, IO_CURSOR IN OUT T_CURSOR, PERROR OU
     END DETENER_PAUSA;
     
 END PKG_QA_WEB;
+/
